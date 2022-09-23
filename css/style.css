@@ -1,0 +1,200 @@
+@charset "UTF-8";
+/* ■■■■■ ШРИФТЫ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ */
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
+/* ■■■■■ ОБНУЛЯЮЩИЕ СТИЛИ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ */
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+}
+
+header, nav, main, footer, section, aside,
+img, video, picture, source, iframe,
+label, summary, canvas, svg {
+    display: block;
+}
+
+ul, ol, li {
+    display: block;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+input, textarea, button, select {
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+input[type=search]::-webkit-search-cancel-button {
+    display: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button, select {
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+/* ■■■■■ БАЗОВЫЕ СТИЛИ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ */
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: "Rubik", sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+}
+body.body--lock {
+    overflow: hidden;
+}
+body.body--load {
+    overflow: visible;
+}
+
+.page-wrapper {
+    min-height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1000px;
+    padding: 0 1rem;
+    margin: 0 auto;
+}
+
+.none {
+    display: none !important;
+}
+
+/* ■■■■■ СТИЛИ САЙТА ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ */
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    perspective: 1000px;
+}
+
+.block {
+    --deg: 15deg;
+    --n-deg: calc(var(--deg) * (-1));
+    --perspective: 700px;
+    --transition: 700ms;
+    position: relative;
+    width: 300px;
+    aspect-ratio: 1/1.75;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-content: stretch;
+    border: 2px solid hsl(0deg, 0%, 0%);
+    cursor: pointer;
+}
+.block .tracker {
+    --tracker-border-width: 2px;
+    position: relative;
+    z-index: 5;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--tracker-color, transparent);
+    outline: var(--tracker-border-width) solid var(--tracker-color);
+    outline-offset: calc(var(--tracker-border-width) * -1);
+}
+@media (any-hover: hover) {
+    .block .tracker:nth-child(1):hover ~ .block__card {
+        --rX: var(--deg);
+        --rY: var(--n-deg);
+    }
+    .block .tracker:nth-child(2):hover ~ .block__card {
+        --rX: var(--deg);
+        --rY: 0;
+    }
+    .block .tracker:nth-child(3):hover ~ .block__card {
+        --rX: var(--deg);
+        --rY: var(--deg);
+    }
+    .block .tracker:nth-child(4):hover ~ .block__card {
+        --rX: 0;
+        --rY: var(--n-deg);
+    }
+    .block .tracker:nth-child(6):hover ~ .block__card {
+        --rX: 0;
+        --rY: var(--deg);
+    }
+    .block .tracker:nth-child(7):hover ~ .block__card {
+        --rX: var(--n-deg);
+        --rY: var(--n-deg);
+    }
+    .block .tracker:nth-child(8):hover ~ .block__card {
+        --rX: var(--n-deg);
+        --rY: 0;
+    }
+    .block .tracker:nth-child(9):hover ~ .block__card {
+        --rX: var(--n-deg);
+        --rY: var(--deg);
+    }
+}
+.block__card {
+    --rX: 0;
+    --rY: 0;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    transform-style: preserve-3d;
+    transform: perspective(var(--perspective)) rotateX(var(--rX)) rotateY(var(--rY));
+}
+.block__image {
+    position: absolute;
+    inset: 0.5rem;
+}
+.block__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+}
+.block__title {
+    transform: translateZ(50px);
+    isolation: isolate;
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: #fff;
+    user-select: none;
+    text-shadow: 0 0 1em violet;
+}
